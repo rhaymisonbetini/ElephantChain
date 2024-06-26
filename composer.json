@@ -1,0 +1,17 @@
+{
+    "name": "rhaymison/elephant_chain",
+    "description": "llm chain for pho projects",
+    "autoload": {
+        "psr-4": {
+            "Rhaymison\\ElephantChain\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "rhaymisonbetini",
+            "email": "rhaymison@hotmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
