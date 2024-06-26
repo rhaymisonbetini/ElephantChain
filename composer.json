@@ -13,5 +13,14 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {}
+    "require": {
+        "codewithkyrian/chromadb-php": "dev-main",
+        "openai-php/client": "dev-main",
+        "spatie/pdf-to-text": "dev-main"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    }
 }
