@@ -1,6 +1,7 @@
 {
     "name": "rhaymison/elephant_chain",
     "description": "llm chain for pho projects",
+    "type": "library",
     "autoload": {
         "psr-4": {
             "Rhaymison\\ElephantChain\\": "src/"
@@ -14,9 +15,11 @@
     ],
     "minimum-stability": "dev",
     "require": {
+        "php": "^8.2",
         "codewithkyrian/chromadb-php": "dev-main",
         "openai-php/client": "dev-main",
-        "spatie/pdf-to-text": "dev-main"
+        "spatie/pdf-to-text": "dev-main",
+        "illuminate/support": "^9.0"
     },
     "config": {
         "allow-plugins": {
