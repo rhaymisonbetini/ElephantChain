@@ -11,3 +11,11 @@ D
 src/ElephantEnum.php,2/b/2b346e615d86c5d683f791fc92a6e9af330ac918
 J
 src/Enuns/ElephantEnum.php,5/0/50832a2a46215bf81d2693782bef7ace1ed68c64
+:
+
+tester.php,e/f/efba189b9c86ddfc575640717834ffbd8a65e190
+E
+samples/cristiano.txt,7/a/7ab8acbcf108aeed13df4ada72c593d3a62358ad
+:
+
+.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302

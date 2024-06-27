@@ -2,7 +2,7 @@
 
 namespace Rhaymison\ElephantChain\DocumentLoaders;
 
-use Illuminate\Support\Facades\File;
+use InvalidArgumentException;
 use Rhaymison\ElephantChain\Enuns\ElephantEnum;
 
 class TextLoaders
@@ -14,19 +14,26 @@ class TextLoaders
      * @param int $overlap
      * @return array
      */
-    public function textLoaders(string $path, int $chunkSize, int $overlap): array
+    function textLoaders(string $path, int $chunkSize, int $overlap): array
     {
         $ids = [];
         $documents = [];
         $metadata = [];
 
-        $files = File::files($path);
+        if (!is_dir($path)) {
+            throw new InvalidArgumentException("O caminho especificado não é um diretório válido: $path");
+        }
+
+        $files = scandir($path);
+
         foreach ($files as $file) {
-            if ($file->getExtension() === 'txt') {
-                $content = File::get($file->getRealPath());
+            $filePath = $path . DIRECTORY_SEPARATOR . $file;
+
+            if (is_file($filePath) && pathinfo($filePath, PATHINFO_EXTENSION) === 'txt') {
+                $content = file_get_contents($filePath);
                 $content = str_replace("\n", " ", $content);
                 $content = mb_convert_encoding($content, 'UTF-8', 'auto');
-
+                $content = $this->removeAccents($content);
                 $words = preg_split('/\s+/', $content);
                 $totalWords = count($words);
 
@@ -42,14 +49,14 @@ class TextLoaders
                         $chunk = array_slice($words, $i, $chunkSizeAdjusted);
                         $chunkText = implode(" ", $chunk);
                     }
-
-                    $ids[] = $file->getFilename() . '_chunk_' . $i;
+                    $ids[] = $file . '_chunk_' . $i;
                     $documents[] = $chunkText;
-                    $metadata[] = [$file->getFilename() => $file->getFilename()];
+                    $metadata[] = [$file => $file];
                 }
             }
         }
-        return [$ids, $documents, $metadata];
+
+        return [$ids, $metadata, $documents];
     }
 
     function getTokenCount($text): int
@@ -57,5 +64,15 @@ class TextLoaders
         return count(preg_split('/\s+|(?<=\W)(?=\w)|(?<=\w)(?=\W)/', $text));
     }
 
+    private function removeAccents(string $text): string
+    {
+        $text = preg_replace('/[áàâãäå]/ui', 'a', $text);
+        $text = preg_replace('/[éèêë]/ui', 'e', $text);
+        $text = preg_replace('/[íìîï]/ui', 'i', $text);
+        $text = preg_replace('/[óòôõö]/ui', 'o', $text);
+        $text = preg_replace('/[úùûü]/ui', 'u', $text);
+        $text = preg_replace('/[ç]/ui', 'c', $text);
+        return preg_replace('/[^a-z0-9\s]/ui', '', $text);
+    }
 
 }

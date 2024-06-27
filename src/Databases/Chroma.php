@@ -14,10 +14,10 @@ class Chroma
     private int $port;
     private string $database;
     private string $tenant;
-    private string $authToken;
+    private string|null $authToken;
     private Client $chroma;
 
-    public function __construct(string $url, int $port, string $database, string $tenant, ?string $authToken)
+    public function __construct(string $url, int $port, string $database, string $tenant, string|null $authToken = null)
     {
         $this->url = $url;
         $this->port = $port;
@@ -110,17 +110,17 @@ class Chroma
 
     /**
      * @param CollectionResource $collection
-     * @param array $embeddings
+     * @param array $queryTexts
      * @param int $results
      * @param array $query
      * @return QueryItemsResponse
      */
-    public function retriever(CollectionResource $collection, array $embeddings, int $results, array $query = []): QueryItemsResponse
+    public function retriever(CollectionResource $collection, array $queryTexts, int $results, array $query = []): QueryItemsResponse
     {
         return $collection->query(
-            queryEmbeddings: $embeddings,
+            queryTexts: $queryTexts,
             nResults: $results,
-            include: ['metadata', 'embeddings']
+            include: ['metadatas', 'documents']
         );
     }
 
