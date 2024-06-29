@@ -6,7 +6,6 @@ use Exception;
 
 class SequentialChain
 {
-
     /**
      * @throws Exception
      */
