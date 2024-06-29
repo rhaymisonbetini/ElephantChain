@@ -14,7 +14,6 @@ class RetrieverPromptsTemplate
      */
     public static function simpleRetrieverPromptTemplate(string $question, string $system = null): array
     {
-
         return [
             'system' => $system ?? PromptsEnum::SYSTEM_SIMPLE_PROMPT_RETRIEVER->value,
             'user' => $question
