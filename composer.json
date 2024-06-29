@@ -18,7 +18,8 @@
         "php": "^8.2",
         "codewithkyrian/chromadb-php": "dev-main",
         "openai-php/client": "dev-main",
-        "spatie/pdf-to-text": "dev-main"
+        "spatie/pdf-to-text": "dev-main",
+        "gemini-api-php/client": "dev-main"
     },
     "config": {
         "allow-plugins": {
