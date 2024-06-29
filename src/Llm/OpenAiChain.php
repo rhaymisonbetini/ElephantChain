@@ -17,20 +17,25 @@ class OpenAiChain
      */
     private string $modelName;
 
+    private float $temperature;
+
     /**
      * @param string $apiKey
      * @param string $modelName
+     * @param float $temperature
      */
-    public function __construct(string $apiKey, string $modelName)
+    public function __construct(string $apiKey, string $modelName, float $temperature = 0.5)
     {
         $this->client = OpenAI::client($apiKey);
         $this->modelName = $modelName;
+        $this->temperature = $temperature;
     }
 
     public function inference(array $prompt): string
     {
         $result = $this->client->chat()->create([
             'model' => $this->modelName,
+            'temperature' => $this->temperature,
             'messages' => [
                 ['role' => 'system', 'content' => $prompt['system']],
                 ['role' => 'user', 'content' => $prompt['user']],

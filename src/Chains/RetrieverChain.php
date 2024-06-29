@@ -32,11 +32,15 @@ class RetrieverChain
     public function dispatch(mixed $retriever, array $prompt): string
     {
         if (isset($retriever->documents[0])) {
-
             if (count($retriever->documents[0]) > 1) {
-                foreach ($retriever->documents[0] as $document) {
-                    print($document);
+
+                $summary = '';
+                $promptBase = RetrieverPromptsTemplate::internalSummaryRetrieverPrepareTemplate();
+                foreach ($retriever->documents[0] as $key => $document) {
+                    $promptBase['user'] = RetrieverPromptsTemplate::transformForSummaryRetriever($promptBase['user'], $prompt['user'], $document);
+                    $summary .= "\n\n" . $this->defineGate($this->model, $document ?? '', $promptBase, GatesEnum::SUMARY_GATE->value);
                 }
+                return $this->defineGate($this->model, $summary, $prompt, GatesEnum::INFERENCE_GATE->value);
 
             } else {
                 return $this->defineGate($this->model, $retriever->documents[0][0] ?? '', $prompt, GatesEnum::INFERENCE_GATE->value);
@@ -68,12 +72,17 @@ class RetrieverChain
      * @param int $gate
      * @return string
      */
-    private function handleOpenAiGate(OpenAiChain|GeminiChain|MixtralChain $model, string $fractal, array &$prompt, int $gate): string
+    private function handleOpenAiGate(OpenAiChain|GeminiChain|MixtralChain $model, string $fractal, array $prompt, int $gate): string
     {
         if ($gate == GatesEnum::INFERENCE_GATE->value) {
             $prompt['user'] = RetrieverPromptsTemplate::transformPrompt($prompt['user'], $fractal);
             return $this->model->inference($prompt);
         }
+
+        if ($gate == GatesEnum::SUMARY_GATE->value) {
+            return $this->model->inference($prompt);
+        }
+
         return '';
     }
 
