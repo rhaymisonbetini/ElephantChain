@@ -9,7 +9,7 @@ use Rhaymison\ElephantChain\Llm\MixtralChain;
 use Rhaymison\ElephantChain\Llm\OpenAiChain;
 use Rhaymison\ElephantChain\Prompts\RetrieverPromptsTemplate;
 
-class RetrieverChain extends Chains
+class RetrieverChain extends Chain
 {
 
     /**

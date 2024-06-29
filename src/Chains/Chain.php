@@ -7,7 +7,7 @@ use Rhaymison\ElephantChain\Llm\GeminiChain;
 use Rhaymison\ElephantChain\Llm\MixtralChain;
 use Rhaymison\ElephantChain\Llm\OpenAiChain;
 
-class Chains
+class Chain
 {
 
     /**
