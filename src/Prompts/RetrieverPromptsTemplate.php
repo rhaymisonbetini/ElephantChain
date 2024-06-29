@@ -12,12 +12,20 @@ class RetrieverPromptsTemplate
      * @param string|null $system
      * @return array
      */
-    public static function simpleRetrieverPromptTemplate(string $question,  string $system = null): array
+    public static function simpleRetrieverPromptTemplate(string $question, string $system = null): array
     {
 
         return [
             'system' => $system ?? PromptsEnum::SYSTEM_SIMPLE_PROMPT_RETRIEVER->value,
             'user' => $question
+        ];
+    }
+
+    public static function internalSummaryRetrieverPrepareTemplate(): array
+    {
+        return [
+            'system' => PromptsEnum::SYSTEM_SIMPLE_PROMPT_SUMMARY_INTERAL_RETRIEVER->value,
+            'user' => PromptsEnum::SYSTEM_USER_PROMPT_SUMMARY_INTERAL_RETRIEVER->value
         ];
     }
 
@@ -29,5 +37,10 @@ class RetrieverPromptsTemplate
     public static function transformPrompt(string $user, string $context): string
     {
         return "User Question: " . $user . "\n\n" . "Context: " . $context;
+    }
+
+    public static function transformForSummaryRetriever(string $internalPrompt, string $user, string $context)
+    {
+        return $internalPrompt . "\n\n" . "User Question: " . $user . "\n\n" . "Context: " . $context;
     }
 }
