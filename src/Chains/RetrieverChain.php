@@ -3,6 +3,7 @@
 namespace Rhaymison\ElephantChain\Chains;
 
 use JetBrains\PhpStorm\Pure;
+use Psr\Http\Client\ClientExceptionInterface;
 use Rhaymison\ElephantChain\Enuns\GatesEnum;
 use Rhaymison\ElephantChain\Llm\GeminiChain;
 use Rhaymison\ElephantChain\Llm\MixtralChain;
@@ -24,6 +25,7 @@ class RetrieverChain extends Chain
      * @param mixed $retriever
      * @param array $prompt
      * @return string
+     * @throws ClientExceptionInterface
      */
     public function dispatch(mixed $retriever, array $prompt): string
     {
@@ -41,6 +43,7 @@ class RetrieverChain extends Chain
             }
 
             $prompt['user'] = RetrieverPromptsTemplate::transformPrompt($prompt['user'], $summary);
+            print_r($prompt);
             return $this->defineGate($prompt);
         }
         return '';

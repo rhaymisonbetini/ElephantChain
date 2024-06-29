@@ -41,7 +41,7 @@ class GeminiChain
             ->withGenerationConfig($generationConfig)
             ->generateContent(
                 new TextPart('system: ' . $prompt['system']),
-                new TextPart('user: ' . $prompt['system']),
+                new TextPart('user: ' . $prompt['user']),
             );
         return $result->text();
     }

@@ -15,8 +15,8 @@ class GeminiEmbeddingsFunction implements EmbeddingFunction
     private Client $client;
 
     public function __construct(
-        public readonly string    $apiKey,
-        public readonly ModelName $model = ModelName::Embedding,
+        public readonly string $apiKey,
+        public readonly ModelName  $model = ModelName::Embedding,
     )
     {
         $this->client = new Client($this->apiKey);
@@ -36,7 +36,6 @@ class GeminiEmbeddingsFunction implements EmbeddingFunction
 
                 $embeddings[] = $response->embedding->values;
             }
-
             return $embeddings;
         } catch (ClientExceptionInterface $e) {
             throw new \RuntimeException("Error calling Gemini API: {$e->getMessage()}", 0, $e);

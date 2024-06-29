@@ -3,6 +3,7 @@
 namespace Rhaymison\ElephantChain\Chains;
 
 use InvalidArgumentException;
+use Psr\Http\Client\ClientExceptionInterface;
 use Rhaymison\ElephantChain\Llm\GeminiChain;
 use Rhaymison\ElephantChain\Llm\MixtralChain;
 use Rhaymison\ElephantChain\Llm\OpenAiChain;
@@ -26,6 +27,7 @@ class Chain
     /**
      * @param array $prompt
      * @return string
+     * @throws ClientExceptionInterface
      */
     public function run(array $prompt): string
     {
@@ -36,6 +38,7 @@ class Chain
     /**
      * @param array $prompt
      * @return string
+     * @throws ClientExceptionInterface
      */
     public function defineGate(array $prompt,): string
     {
@@ -50,6 +53,7 @@ class Chain
     /**
      * @param array $prompt
      * @return string
+     * @throws ClientExceptionInterface
      */
     private function handleOpenAiGate(array $prompt): string
     {
@@ -59,11 +63,11 @@ class Chain
     /**
      * @param array $prompt
      * @return string
+     * @throws ClientExceptionInterface
      */
     private function handleGeminiGate(array $prompt): string
     {
-        // TODO: Implement Gemini gate logic
-        return '';
+        return $this->model->inference($prompt);
     }
 
     /**

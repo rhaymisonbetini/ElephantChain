@@ -5,6 +5,7 @@ namespace Rhaymison\ElephantChain\Databases;
 use Codewithkyrian\ChromaDB\ChromaDB;
 use Codewithkyrian\ChromaDB\Client;
 use Codewithkyrian\ChromaDB\Embeddings\OpenAIEmbeddingFunction;
+use Codewithkyrian\ChromaDB\Embeddings\OllamaEmbeddingFunction;
 use Codewithkyrian\ChromaDB\Generated\Responses\QueryItemsResponse;
 use Codewithkyrian\ChromaDB\Resources\CollectionResource;
 use Rhaymison\ElephantChain\Embeddings\GeminiEmbeddingsFunction;
@@ -64,6 +65,15 @@ class Chroma
     public function openAIEmbeddingsFunction(string $apiKey, string $model, string $organization = ''): OpenAIEmbeddingFunction
     {
         return new OpenAIEmbeddingFunction($apiKey, $organization, $model);
+    }
+
+    /**
+     * @param string $apiKey
+     * @return GeminiEmbeddingsFunction
+     */
+    public function geminiEmbeddingsFunction(string $apiKey): GeminiEmbeddingsFunction
+    {
+        return new GeminiEmbeddingsFunction($apiKey);
     }
 
 
