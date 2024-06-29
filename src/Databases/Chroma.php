@@ -7,6 +7,7 @@ use Codewithkyrian\ChromaDB\Client;
 use Codewithkyrian\ChromaDB\Embeddings\OpenAIEmbeddingFunction;
 use Codewithkyrian\ChromaDB\Generated\Responses\QueryItemsResponse;
 use Codewithkyrian\ChromaDB\Resources\CollectionResource;
+use Rhaymison\ElephantChain\Embeddings\GeminiEmbeddingsFunction;
 
 class Chroma
 {
@@ -68,10 +69,10 @@ class Chroma
 
     /**
      * @param string $collection
-     * @param OpenAIEmbeddingFunction $embeddings
+     * @param OpenAIEmbeddingFunction|GeminiEmbeddingsFunction $embeddings
      * @return CollectionResource
      */
-    public function getOrCreateCollection(string $collection, OpenAIEmbeddingFunction $embeddings): CollectionResource
+    public function getOrCreateCollection(string $collection, OpenAIEmbeddingFunction|GeminiEmbeddingsFunction $embeddings): CollectionResource
     {
         return $this->chroma->getOrCreateCollection($collection, null, $embeddings);
     }
