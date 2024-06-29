@@ -8,7 +8,6 @@ use GeminiAPI\Client;
 use GeminiAPI\Enums\ModelName;
 use GeminiAPI\Resources\Parts\TextPart;
 use Psr\Http\Client\ClientExceptionInterface;
-use Codewithkyrian\ChromaDB\Embeddings\EmbeddingFunction;
 
 class GeminiEmbeddingsFunction implements EmbeddingFunction
 {

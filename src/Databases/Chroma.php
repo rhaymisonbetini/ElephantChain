@@ -5,10 +5,10 @@ namespace Rhaymison\ElephantChain\Databases;
 use Codewithkyrian\ChromaDB\ChromaDB;
 use Codewithkyrian\ChromaDB\Client;
 use Codewithkyrian\ChromaDB\Embeddings\OpenAIEmbeddingFunction;
-use Codewithkyrian\ChromaDB\Embeddings\OllamaEmbeddingFunction;
 use Codewithkyrian\ChromaDB\Generated\Responses\QueryItemsResponse;
 use Codewithkyrian\ChromaDB\Resources\CollectionResource;
 use Rhaymison\ElephantChain\Embeddings\GeminiEmbeddingsFunction;
+use Rhaymison\ElephantChain\Embeddings\OpenAIEmbeddingFunction as ElephantOpenAiEmbeddingsFunction;
 
 class Chroma
 {
@@ -79,10 +79,10 @@ class Chroma
 
     /**
      * @param string $collection
-     * @param OpenAIEmbeddingFunction|GeminiEmbeddingsFunction $embeddings
+     * @param ElephantOpenAiEmbeddingsFunction|OpenAIEmbeddingFunction|GeminiEmbeddingsFunction $embeddings
      * @return CollectionResource
      */
-    public function getOrCreateCollection(string $collection, OpenAIEmbeddingFunction|GeminiEmbeddingsFunction $embeddings): CollectionResource
+    public function getOrCreateCollection(string $collection, ElephantOpenAiEmbeddingsFunction|OpenAIEmbeddingFunction|GeminiEmbeddingsFunction $embeddings): CollectionResource
     {
         return $this->chroma->getOrCreateCollection($collection, null, $embeddings);
     }
