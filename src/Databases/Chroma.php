@@ -4,11 +4,10 @@ namespace Rhaymison\ElephantChain\Databases;
 
 use Codewithkyrian\ChromaDB\ChromaDB;
 use Codewithkyrian\ChromaDB\Client;
-use Codewithkyrian\ChromaDB\Embeddings\OpenAIEmbeddingFunction;
-use Codewithkyrian\ChromaDB\Embeddings\OllamaEmbeddingFunction;
 use Codewithkyrian\ChromaDB\Generated\Responses\QueryItemsResponse;
 use Codewithkyrian\ChromaDB\Resources\CollectionResource;
 use Rhaymison\ElephantChain\Embeddings\GeminiEmbeddingsFunction;
+use Rhaymison\ElephantChain\Embeddings\OpenAIEmbeddingFunction;
 
 class Chroma
 {
