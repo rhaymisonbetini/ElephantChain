@@ -3,11 +3,8 @@
 namespace Rhaymison\ElephantChain\Chains;
 
 use Exception;
-use Rhaymison\ElephantChain\Llm\GeminiChain;
-use Rhaymison\ElephantChain\Llm\MixtralChain;
-use Rhaymison\ElephantChain\Llm\OpenAiChain;
 
-class SequentialChain extends Chain
+class SequentialChain
 {
 
     /**
