@@ -15,6 +15,14 @@ class PromptTemplate
         ];
     }
 
+    public static function sequentialPromptTemplate(string $question, $system = null): array
+    {
+        return [
+            'system' => $system ?? PromptsEnum::SYSTEM_SIMPLE_PROMPT_RETRIEVER->value,
+            'user' => $question
+        ];
+    }
+
     public static function transformForSimplePromot(string $question, array $arguments): string
     {
         preg_match_all('/\{\s*(.*?)\s*\}/', $question, $matches);
