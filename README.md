@@ -86,6 +86,54 @@ $gemini = new GeminiChain('GEMINI_KEY');
 
 ```
 
+
+## Loaders
+
+### TXT Files
+
+The `TxtLoader` class allows you to load and process text files for use within Elephant Chain.
+
+The first parameter is the directory, the second is the chunk size and the third is the overlapping window.
+
+```PHP
+use Rhaymison\ElephantChain\DocumentLoaders\TextLoaders;
+$textLoader = new TextLoaders;
+$documents = $textLoader->dirTextLoaders('./samples', 500, 20);
+```
+
+If you want to load only one txt file you can use this method and the last two parameters remain chunk and overlaping
+
+```PHP
+use Rhaymison\ElephantChain\DocumentLoaders\TextLoaders;
+$textLoader = new TextLoaders;
+$documents = $textLoader->singleTextFileLoader('./samples/cristiano_ronaldo.txt', 500, 20);
+```
+
+### PDF Loaders
+
+The `PdfLoader` class enables you to load and extract text from PDF documents, making it easy to integrate document data
+into your workflows.
+
+```PHP
+use Rhaymison\ElephantChain\DocumentLoaders\PdfLoaders;
+$pdfLoader = new PdfLoaders;
+$documents = $pdfLoader->dirPdfLoader('./samples', 500, 20);
+```
+
+```PHP
+use Rhaymison\ElephantChain\DocumentLoaders\PdfLoaders;
+$pdfLoader = new PdfLoaders;
+$documents = $pdfLoader->singlePdfLoader('./samples/inicial.pdf', 500, 20);
+```
+
+### CSV Loaders
+
+```PHP
+use Rhaymison\ElephantChain\DocumentLoaders\TabularLoaders;
+$tabular = new TabularLoaders();
+$dataTabular = $tabular->csvLoader('./samples/samples.csv', ',', 1000);
+```
+
 ## Chains
 
 ### Chain
@@ -194,53 +242,6 @@ $chain = new TabularChain($gemini);
 $question = "Take the first 10 data where the industry code is GH134, level is 4 and year is 2016. Then do an analysis";
 $response = $chain->dispatchTabularChain($dataTabular, $question);
 print($response);
-```
-
-## Loaders
-
-### TXT Files
-
-The `TxtLoader` class allows you to load and process text files for use within Elephant Chain.
-
-The first parameter is the directory, the second is the chunk size and the third is the overlapping window.
-
-```PHP
-use Rhaymison\ElephantChain\DocumentLoaders\TextLoaders;
-$textLoader = new TextLoaders;
-$documents = $textLoader->dirTextLoaders('./samples', 500, 20);
-```
-
-If you want to load only one txt file you can use this method and the last two parameters remain chunk and overlaping
-
-```PHP
-use Rhaymison\ElephantChain\DocumentLoaders\TextLoaders;
-$textLoader = new TextLoaders;
-$documents = $textLoader->singleTextFileLoader('./samples/cristiano_ronaldo.txt', 500, 20);
-```
-
-### PDF Loaders
-
-The `PdfLoader` class enables you to load and extract text from PDF documents, making it easy to integrate document data
-into your workflows.
-
-```PHP
-use Rhaymison\ElephantChain\DocumentLoaders\PdfLoaders;
-$pdfLoader = new PdfLoaders;
-$documents = $pdfLoader->dirPdfLoader('./samples', 500, 20);
-```
-
-```PHP
-use Rhaymison\ElephantChain\DocumentLoaders\PdfLoaders;
-$pdfLoader = new PdfLoaders;
-$documents = $pdfLoader->singlePdfLoader('./samples/inicial.pdf', 500, 20);
-```
-
-### CSV Loaders
-
-```PHP
-use Rhaymison\ElephantChain\DocumentLoaders\TabularLoaders;
-$tabular = new TabularLoaders();
-$dataTabular = $tabular->csvLoader('./samples/samples.csv', ',', 1000);
 ```
 
 ## Vector Databases
