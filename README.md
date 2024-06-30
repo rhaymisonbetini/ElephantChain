@@ -23,15 +23,15 @@ and efficiently.
 1. [Installation](#installation)
 2. [Basic Usage](#basic-usage)
 3. [Available Models](#available-models)
-4. [Chains](#chains)
+4. [Loaders](#loaders)
+    - [TXT Files](#txt-files)
+    - [PDF Loaders](#pdf-loaders)
+    - [CSV Loaders](#csv-loaders)
+5. [Chains](#chains)
     - [Chain](#chain)
     - [RetrieverChain](#retrieverchain)
     - [SequentialChain](#sequentialchain)
     - [TabularChain](#tabularchain)
-5. [Text Loaders](#text-loaders)
-    - [TXT Files](#txt-files)
-    - [PDF Loaders](#pdf-loaders)
-    - [CSV Loaders](#csv-loaders)
 6. [Vector Databases](#vector-databases)
     - [ElephantVectors](#elephantvectors)
     - [ChromaDB](#chromadb)
@@ -175,8 +175,10 @@ If you wish, you can include a retriever chain at the beginning, end or middle o
 must be passed forward.
 
 ### TabularChain
-The TabularChain class loads data from CSV/XLSX spreadsheets and applies user-defined transformations and filters to 
-the extracted data. This class enables flexible manipulation and analysis of data through dynamically generated functions.
+
+The TabularChain class loads data from CSV/XLSX spreadsheets and applies user-defined transformations and filters to
+the extracted data. This class enables flexible manipulation and analysis of data through dynamically generated
+functions.
 
 ```php
 use Rhaymison\ElephantChain\Chains\TabularChain;
@@ -194,7 +196,7 @@ $response = $chain->dispatchTabularChain($dataTabular, $question);
 print($response);
 ```
 
-## Text Loaders
+## Loaders
 
 ### TXT Files
 
