@@ -215,7 +215,7 @@ use Rhaymison\ElephantChain\Prompts\RetrieverPromptsTemplate;
 $textLoader = new TextLoaders;
 $documents = $textLoader->dirTextLoaders('./samples', 500, 20);
 
-$embeddingFunction = new GeminiEmbeddingsFunction('');
+$embeddingFunction = new GeminiEmbeddingsFunction('GEMINI_KEY');
 $elephantVectors = new ElephantVectors($embeddingFunction);
 $vectors = $elephantVectors->generateEmbeddingsChunks($documents);
 
@@ -224,7 +224,7 @@ $question = 'What happened on July 28, the galactic player';
 #embedding, question and k search
 $texts = $elephantVectors->retriever($vectors, $question, 4);
 
-$gemini = new GeminiChain('');
+$gemini = new GeminiChain('GEMINI_KEY');
 $chain = new RetrieverChain($gemini);
 
 $prompt = RetrieverPromptsTemplate::simpleRetrieverPromptTemplate($question);
