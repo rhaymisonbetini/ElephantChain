@@ -1,4 +1,7 @@
 # Elephant Chain 🐘 - A Powerful Library for PHP Environments with LLMs
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rhaymisonbetini/huggphotos/main/elephantchain.webp" width="500" height="400" alt="Banner" />
+</p>
 
 Welcome to **Elephant Chain 🐘**, a robust library crafted to seamlessly integrate Large Language Models (LLMs) into PHP
 environments. Whether you're developing sophisticated natural language processing applications or enhancing your PHP
