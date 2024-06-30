@@ -1,4 +1,5 @@
 # Elephant Chain 🐘 - A Powerful Library for PHP Environments with LLMs
+
 <p align="center">
   <img src="https://raw.githubusercontent.com/rhaymisonbetini/huggphotos/main/elephantchain.webp" width="500" height="400" alt="Banner" />
 </p>
@@ -26,9 +27,11 @@ and efficiently.
     - [Chain](#chain)
     - [RetrieverChain](#retrieverchain)
     - [SequentialChain](#sequentialchain)
+    - [TabularChain](#tabularchain)
 5. [Text Loaders](#text-loaders)
     - [TXT Files](#txt-files)
     - [PDF Loaders](#pdf-loaders)
+    - [CSV Loaders](#csv-loaders)
 6. [Vector Databases](#vector-databases)
     - [ElephantVectors](#elephantvectors)
     - [ChromaDB](#chromadb)
@@ -66,8 +69,10 @@ print($response);
 ```
 
 ## Available Models
+
 Elephant Chain currently supports the use of models from OpenAI and Gemini.
-Integration with Mixtral and LlamaCPP is currently being implemented. Here are examples of how to initialize and use these models:
+Integration with Mixtral and LlamaCPP is currently being implemented. Here are examples of how to initialize and use
+these models:
 
 ```PHP
 use Rhaymison\ElephantChain\Llm\GeminiChain;
@@ -103,7 +108,8 @@ print($response);
 
 ### RetrieverChain
 
-The `RetrieverChain` class extends the functionality of `Chain` by incorporating mechanisms to retrieve relevant data based on provided prompts.
+The `RetrieverChain` class extends the functionality of `Chain` by incorporating mechanisms to retrieve relevant data
+based on provided prompts.
 
 ```PHP
 use Rhaymison\ElephantChain\Chains\RetrieverChain;
@@ -121,7 +127,8 @@ print($response);
 
 ### SequentialChain
 
-The `SequentialChain` class allows you to create a series of dependent operations, where the output of one operation serves as the input for the next.
+The `SequentialChain` class allows you to create a series of dependent operations, where the output of one operation
+serves as the input for the next.
 
 ```PHP
 use Rhaymison\ElephantChain\Llm\OpenAiChain;
@@ -163,8 +170,29 @@ $response = $sequentialChain->dispatchSequence([
 
 echo $response;
 ```
-If you wish, you can include a retriever chain at the beginning, end or middle of the chain. Just ensure that the exit must be passed forward.
 
+If you wish, you can include a retriever chain at the beginning, end or middle of the chain. Just ensure that the exit
+must be passed forward.
+
+### TabularChain
+The TabularChain class loads data from CSV/XLSX spreadsheets and applies user-defined transformations and filters to 
+the extracted data. This class enables flexible manipulation and analysis of data through dynamically generated functions.
+
+```php
+use Rhaymison\ElephantChain\Chains\TabularChain;
+use Rhaymison\ElephantChain\DocumentLoaders\TabularLoaders;
+use Rhaymison\ElephantChain\Llm\GeminiChain;
+
+$gemini = new GeminiChain('');
+$tabular = new TabularLoaders();
+$dataTabular = $tabular->csvLoader('./samples/samples.csv');
+
+$chain = new TabularChain($gemini);
+
+$question = "Take the first 10 data where the industry code is GH134, level is 4 and year is 2016. Then do an analysis";
+$response = $chain->dispatchTabularChain($dataTabular, $question);
+print($response);
+```
 
 ## Text Loaders
 
@@ -173,6 +201,7 @@ If you wish, you can include a retriever chain at the beginning, end or middle o
 The `TxtLoader` class allows you to load and process text files for use within Elephant Chain.
 
 The first parameter is the directory, the second is the chunk size and the third is the overlapping window.
+
 ```PHP
 use Rhaymison\ElephantChain\DocumentLoaders\TextLoaders;
 $textLoader = new TextLoaders;
@@ -187,10 +216,10 @@ $textLoader = new TextLoaders;
 $documents = $textLoader->singleTextFileLoader('./samples/cristiano_ronaldo.txt', 500, 20);
 ```
 
-
 ### PDF Loaders
 
-The `PdfLoader` class enables you to load and extract text from PDF documents, making it easy to integrate document data into your workflows.
+The `PdfLoader` class enables you to load and extract text from PDF documents, making it easy to integrate document data
+into your workflows.
 
 ```PHP
 use Rhaymison\ElephantChain\DocumentLoaders\PdfLoaders;
@@ -204,12 +233,23 @@ $pdfLoader = new PdfLoaders;
 $documents = $pdfLoader->singlePdfLoader('./samples/inicial.pdf', 500, 20);
 ```
 
+### CSV Loaders
+
+```PHP
+use Rhaymison\ElephantChain\DocumentLoaders\TabularLoaders;
+$tabular = new TabularLoaders();
+$dataTabular = $tabular->csvLoader('./samples/samples.csv', ',', 1000);
+```
+
 ## Vector Databases
 
 ### ElephantVectors
 
-The `ElephantVectors` class provides functionalities to store, manage, and query vectorized data, enabling efficient similarity searches and advanced data retrieval operations.
-If you don't want to have a vector database, you can use ElephantVectors which provides document embeddings and allows you to perform the searches directly to the model.
+The `ElephantVectors` class provides functionalities to store, manage, and query vectorized data, enabling efficient
+similarity searches and advanced data retrieval operations.
+If you don't want to have a vector database, you can use ElephantVectors which provides document embeddings and allows
+you to perform the searches directly to the model.
+
 ```PHP
 use Rhaymison\ElephantChain\Chains\RetrieverChain;
 use Rhaymison\ElephantChain\DocumentLoaders\TextLoaders;
@@ -242,7 +282,8 @@ print($response);
 
 ### ChromaDB
 
-The `ChromaDB` class offers robust capabilities for handling vectorized data, including storage, management, and querying, optimized for high-performance vector similarity searches.
+The `ChromaDB` class offers robust capabilities for handling vectorized data, including storage, management, and
+querying, optimized for high-performance vector similarity searches.
 
 ```Bash
 docker pull chromadb/chroma &&
