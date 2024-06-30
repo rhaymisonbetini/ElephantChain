@@ -10,4 +10,5 @@ enum GatesEnum: int
     case SIMPLE_GATE = 0;
     case INFERENCE_GATE = 1;
     case SUMARY_GATE = 2;
+    case TABULAR_FUN = 4;
 }

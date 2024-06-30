@@ -47,4 +47,11 @@ final class StringHelpers
     {
         return count(preg_split('/\s+|(?<=\W)(?=\w)|(?<=\w)(?=\W)/', $text));
     }
+
+    public static function sanitizeTabularEval(string $text): string
+    {
+        $sanitizedFunction = trim($text);
+        $sanitizedFunction = str_replace('```php', '', $sanitizedFunction);
+        return str_replace('```', '', $sanitizedFunction);
+    }
 }
