@@ -137,7 +137,7 @@ use Rhaymison\ElephantChain\Chains\SequentialChain;
 use Rhaymison\ElephantChain\Chains\Chain;
 
 $openAi = new OpenAiChain('OPEN_AI_KEY', 'gpt-3.5-turbo');
-$gemini = new GeminiChain('');
+$gemini = new GeminiChain('GEMINI_KEY');
 
 $chain1 = new Chain($openAi);
 $chain2Callable = function () use ($chain1) {
@@ -183,7 +183,7 @@ use Rhaymison\ElephantChain\Chains\TabularChain;
 use Rhaymison\ElephantChain\DocumentLoaders\TabularLoaders;
 use Rhaymison\ElephantChain\Llm\GeminiChain;
 
-$gemini = new GeminiChain('');
+$gemini = new GeminiChain('GEMINI_KEY');
 $tabular = new TabularLoaders();
 $dataTabular = $tabular->csvLoader('./samples/samples.csv');
 
