@@ -4,7 +4,7 @@ namespace Rhaymison\ElephantChain\Helpers;
 
 use Rhaymison\ElephantChain\Enuns\ElephantEnum;
 
-class ChunkGenerator
+final class ChunkGenerator
 {
     /**
      * @param array $words

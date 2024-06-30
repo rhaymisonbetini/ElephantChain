@@ -2,9 +2,7 @@
 
 namespace Rhaymison\ElephantChain\Chains;
 
-use JetBrains\PhpStorm\Pure;
 use Psr\Http\Client\ClientExceptionInterface;
-use Rhaymison\ElephantChain\Enuns\GatesEnum;
 use Rhaymison\ElephantChain\Llm\GeminiChain;
 use Rhaymison\ElephantChain\Llm\MixtralChain;
 use Rhaymison\ElephantChain\Llm\OpenAiChain;
@@ -27,26 +25,20 @@ class RetrieverChain extends Chain
      * @return string
      * @throws ClientExceptionInterface
      */
-    public function dispatch(mixed $retriever, array $prompt): string
+    public function dispatch(array $retriever, array $prompt): string
     {
-        if (isset($retriever->documents[0])) {
-            $summary = '';
-
-            if (count($retriever->documents[0]) > 1) {
-                $promptBase = RetrieverPromptsTemplate::internalSummaryRetrieverPrepareTemplate();
-                foreach ($retriever->documents[0] as $document) {
-                    $promptBase['user'] = RetrieverPromptsTemplate::transformForSummaryRetriever($promptBase['user'], $prompt['user'], $document);
-                    $summary .= "\n\n" . $this->defineGate($promptBase);
-                }
-            } else {
-                $summary = $retriever->documents[0][0] ?? '';
+        $summary = '';
+        if (count($retriever) > 1) {
+            $promptBase = RetrieverPromptsTemplate::internalSummaryRetrieverPrepareTemplate();
+            foreach ($retriever as $document) {
+                $promptBase['user'] = RetrieverPromptsTemplate::transformForSummaryRetriever($promptBase['user'], $prompt['user'], $document);
+                $summary .= "\n\n" . $this->defineGate($promptBase);
             }
-
-            $prompt['user'] = RetrieverPromptsTemplate::transformPrompt($prompt['user'], $summary);
-            print_r($prompt);
-            return $this->defineGate($prompt);
+        } else {
+            return $retriever[0] ?? '';
         }
-        return '';
+        $prompt['user'] = RetrieverPromptsTemplate::transformPrompt($prompt['user'], $summary);
+        return $this->defineGate($prompt);
     }
 
 }
