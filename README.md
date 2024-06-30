@@ -149,8 +149,8 @@ $chain2Callable = function ($input) use ($chain2) {
 $chain3 = new Chain($gemini);
 $chain3Callable = function ($input) use ($chain3) {
     $text = "Evaluate the past poem and say which period of history it fits into. Poem: {output}";
-    $prompt2 = PromptTemplate::createPromptTemplate($text, ['output' => $input]);
-    return $chain3->run($prompt2);
+    $prompt3 = PromptTemplate::createPromptTemplate($text, ['output' => $input]);
+    return $chain3->run($prompt3);
 };
 
 $sequentialChain = new SequentialChain();
@@ -163,6 +163,9 @@ $response = $sequentialChain->dispatchSequence([
 
 echo $response;
 ```
+If you wish, you can include a retriever chain at the beginning, end or middle of the chain. Just ensure that the exit must be passed forward.
+
+
 ## Text Loaders
 
 ### TXT Files
