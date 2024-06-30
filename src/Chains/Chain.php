@@ -40,7 +40,7 @@ class Chain
      * @return string
      * @throws ClientExceptionInterface
      */
-    public function defineGate(array $prompt,): string
+    public function defineGate(array $prompt): string
     {
         return match (true) {
             $this->model instanceof OpenAiChain => $this->handleOpenAiGate($prompt),

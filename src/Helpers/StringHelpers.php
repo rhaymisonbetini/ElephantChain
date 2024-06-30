@@ -2,7 +2,7 @@
 
 namespace Rhaymison\ElephantChain\Helpers;
 
-class StringHelpers
+final class StringHelpers
 {
     /**
      * @param string $content
@@ -10,10 +10,18 @@ class StringHelpers
      */
     public static function clearString(string $content): array|false
     {
+        return preg_split('/\s+/', self::purifyString($content));
+    }
+
+    /**
+     * @param string $content
+     * @return string
+     */
+    public static function purifyString(string $content): string
+    {
         $content = str_replace("\n", " ", $content);
         $content = mb_convert_encoding($content, 'UTF-8', 'auto');
-        $content = self::removeAccents($content);
-        return preg_split('/\s+/', $content);
+        return self::removeAccents($content);
     }
 
     /**
