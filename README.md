@@ -257,7 +257,7 @@ use Rhaymison\ElephantChain\Prompts\ChatPromptTemplate;
 
 $openAi = new OpenAiChain('', 'gpt-3.5-turbo');
 $chain = new ChatMemoryChain($openAi, 'test');
-$chatPrompt = ChatPromptTemplate::chatTemplate('Qual foi a primeir apergunta que eu te fiz?', []);
+$chatPrompt = ChatPromptTemplate::chatTemplate('What was the first question I asked you?', []);
 $chain->dispatchChainMemory($chatPrompt);
 $memory = $chain->getConversation();
 print_r($memory);
