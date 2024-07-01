@@ -7,3 +7,5 @@ chainteste.php
 elevectester.php
 tabular.php
 memory.php
+src/Chains/memory/chat/
+src/Chains/memory/retriever/

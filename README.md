@@ -12,9 +12,9 @@ and efficiently.
 ## Key Features
 
 - **Seamless Integration:** Easily incorporate LLMs into your existing PHP projects with minimal setup.
-- **High Performance:** Optimized for performance, ensuring fast and responsive AI-powered applications.
+- **High Performance:** Optimized for performance, ensuring fast AI-powered applications.
 - **Flexibility:** Supports a variety of LLMs, allowing you to select the model that best suits your needs.
-- **User-Friendly:** Straightforward and intuitive design, making it accessible for developers of all skill levels.
+- **User-Friendly:** Straightforward and intuitive, making it accessible for developers of all skill levels.
 - **Comprehensive Documentation:** Detailed documentation and examples to help you quickly get started and fully utilize
   the library's capabilities.
 
@@ -32,6 +32,7 @@ and efficiently.
     - [RetrieverChain](#retrieverchain)
     - [SequentialChain](#sequentialchain)
     - [TabularChain](#tabularchain)
+    - [ChatMemoryChain](#chatmemorychain)
 6. [Vector Databases](#vector-databases)
     - [ElephantVectors](#elephantvectors)
     - [ChromaDB](#chromadb)
@@ -85,7 +86,6 @@ $openAi = new OpenAiChain('OPEN_AI_KEY', 'MODEL');
 $gemini = new GeminiChain('GEMINI_KEY');
 
 ```
-
 
 ## Loaders
 
@@ -244,6 +244,29 @@ $response = $chain->dispatchTabularChain($dataTabular, $question);
 print($response);
 ```
 
+### ChatMemoryChain
+
+If you want to add memory to your conversation. You can use the Memory chat with the memory 
+template. A memory cell will be stored and you can manipulate, remove or clear it whenever you 
+want. ChainMemory accepts the template and name of the chat room you want to create.
+
+```php
+use Rhaymison\ElephantChain\Chains\ChatMemoryChain;
+use Rhaymison\ElephantChain\Llm\OpenAiChain;
+use Rhaymison\ElephantChain\Prompts\ChatPromptTemplate;
+
+$openAi = new OpenAiChain('', 'gpt-3.5-turbo');
+$chain = new ChatMemoryChain($openAi, 'test');
+$chatPrompt = ChatPromptTemplate::chatTemplate('Qual foi a primeir apergunta que eu te fiz?', []);
+$chain->dispatchChainMemory($chatPrompt);
+$memory = $chain->getConversation();
+print_r($memory);
+```
+The memory is added automatically and you don't need to worry about it. If you want to start the conversation with a memory, 
+just pass it as the third parameter to the chatTemplate... 
+The ChatMemoryChain already has a native getMemory function that you can use.
+
+
 ## Vector Databases
 
 ### ElephantVectors
@@ -293,7 +316,24 @@ docker pull chromadb/chroma &&
 docker run -p 6666:8000 chromadb/chroma
 ```
 
-Usage example with OpenAI model
+#### Basic usage
+
+```php
+use Rhaymison\ElephantChain\Databases\Chroma;
+use Rhaymison\ElephantChain\DocumentLoaders\TextLoaders;
+
+$chroma = new Chroma('http://localhost', 6666, 'cr7', 'cr7');
+$embeddings = $chroma->openAIEmbeddingsFunction('OPEN_AI_KEY', 'text-embedding-3-small');
+$collection = $chroma->getOrCreateCollection('cristiano', $embeddings);
+$textLoader = new TextLoaders;
+$documents = $textLoader->dirTextLoaders('./samples', 500, 20);
+$chroma->addVectors($collection, $documents[0], $documents[1], $documents[2]);
+```
+
+The $documents variable has a 3-position array where the first is the ids,
+followed by the metadata and the third by the chunks. All arrays correspond to each other.
+
+#### Usage example with OpenAI model
 
 ```PHP
 use Rhaymison\ElephantChain\Databases\Chroma;
@@ -313,7 +353,7 @@ $chain->dispatch($retriever->documents[0], $prompt);
 print($response);
 ```
 
-Usage example with Gemini and passing the embeddings function
+#### Usage example with Gemini and passing the embeddings function
 
 ```PHP
 $question = 'On May 21, against rivals Chelsea, Ronaldo scored the first goal in the 26th minute, what happened next?';
