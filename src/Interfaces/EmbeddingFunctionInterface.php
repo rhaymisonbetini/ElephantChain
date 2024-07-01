@@ -2,12 +2,12 @@
 
 namespace Rhaymison\ElephantChain\Interfaces;
 
-use Codewithkyrian\ChromaDB\Embeddings\OpenAIEmbeddingFunction;
+use Rhaymison\ElephantChain\Embeddings\OpenAIEmbeddingFunction;
 use Codewithkyrian\ChromaDB\Resources\CollectionResource;
 use Rhaymison\ElephantChain\Embeddings\GeminiEmbeddingsFunction;
 use Rhaymison\ElephantChain\Embeddings\MixtralEmbeddingFunction;
 use Rhaymison\ElephantChain\Embeddings\OpenAIEmbeddingFunction as ElephantOpenAiEmbeddingsFunction;
-use Codewithkyrian\ChromaDB\Embeddings\EmbeddingFunction;
+use Rhaymison\ElephantChain\Embeddings\EmbeddingFunction;
 
 interface EmbeddingFunctionInterface extends EmbeddingFunction
 {
