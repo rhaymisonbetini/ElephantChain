@@ -20,7 +20,8 @@
     "openai-php/client": "dev-main",
     "spatie/pdf-to-text": "dev-main",
     "gemini-api-php/client": "dev-main",
-    "ext-mbstring": "*"
+    "ext-mbstring": "*",
+    "partitech/php-mistral": "dev-main"
   },
   "config": {
     "allow-plugins": {
