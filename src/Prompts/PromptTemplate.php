@@ -3,6 +3,7 @@
 namespace Rhaymison\ElephantChain\Prompts;
 
 use Rhaymison\ElephantChain\Enuns\PromptsEnum;
+use Rhaymison\ElephantChain\Helpers\StringHelpers;
 
 class PromptTemplate
 {
@@ -11,7 +12,7 @@ class PromptTemplate
     {
         return [
             'system' => $system ?? PromptsEnum::SYSTEM_SIMPLE_PROMPT_RETRIEVER->value,
-            'user' => self::transformForSimplePromot($question, $arguments)
+            'user' => StringHelpers::transformForSimplePrompt($question, $arguments)
         ];
     }
 
@@ -23,16 +24,4 @@ class PromptTemplate
         ];
     }
 
-    public static function transformForSimplePromot(string $question, array $arguments): string
-    {
-        preg_match_all('/\{\s*(.*?)\s*\}/', $question, $matches);
-
-        foreach ($matches[1] as $placeholder) {
-            if (array_key_exists($placeholder, $arguments)) {
-                $question = str_replace('{' . $placeholder . '}', $arguments[$placeholder], $question);
-            }
-        }
-
-        return $question;
-    }
 }
