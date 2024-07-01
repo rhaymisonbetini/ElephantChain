@@ -2828,7 +2828,8 @@
         "codewithkyrian/chromadb-php": 20,
         "openai-php/client": 20,
         "spatie/pdf-to-text": 20,
-        "gemini-api-php/client": 20
+        "gemini-api-php/client": 20,
+        "partitech/php-mistral": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

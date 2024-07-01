@@ -269,6 +269,45 @@ The memory is added automatically and you don't need to worry about it. If you w
 just pass it as the third parameter to the chatTemplate... 
 The ChatMemoryChain already has a native getMemory function that you can use.
 
+#### Laravem example
+
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Rhaymison\ElephantChain\Chains\ChatMemoryChain;
+use Rhaymison\ElephantChain\Llm\OpenAiChain;
+use Rhaymison\ElephantChain\Prompts\ChatPromptTemplate;
+use Symfony\Component\HttpFoundation\Response;
+
+class SimpleChatController extends Controller
+{
+    private $model;
+
+    public function __construct()
+    {
+        $this->model = new OpenAiChain('', 'gpt-3.5-turbo');
+    }
+
+    public function chat(Request $request)
+    {
+        $payload = $request->all();
+        $question = $payload['question'];
+        $chain = new ChatMemoryChain($this->model, 'room_2');
+        $chatPrompt = ChatPromptTemplate::chatTemplate($question, []);
+        $llm = $chain->dispatchChainMemory($chatPrompt);
+        return response()->json(['msg' => $llm], Response::HTTP_OK);
+    }
+}
+
+```
+Now we have this beautiful result
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rhaymisonbetini/huggphotos/main/chatchain.png" width="500" height="400" alt="Banner" />
+</p>
 
 ## Vector Databases
 
