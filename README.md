@@ -269,7 +269,7 @@ The memory is added automatically and you don't need to worry about it. If you w
 just pass it as the third parameter to the chatTemplate... 
 The ChatMemoryChain already has a native getMemory function that you can use.
 
-#### Laravem example
+#### LARAVEL USAGE
 
 ```php
 <?php
@@ -363,10 +363,11 @@ docker run -p 6666:8000 chromadb/chroma
 ```php
 use Rhaymison\ElephantChain\Databases\Chroma;
 use Rhaymison\ElephantChain\DocumentLoaders\TextLoaders;
+use Rhaymison\ElephantChain\Embeddings\OpenAIEmbeddingFunction;
 
 $chroma = new Chroma('http://localhost', 6666, 'cr7', 'cr7');
-$embeddings = $chroma->openAIEmbeddingsFunction('OPEN_AI_KEY', 'text-embedding-3-small');
-$collection = $chroma->getOrCreateCollection('cristiano', $embeddings);
+$embeddingFunction = new OpenAIEmbeddingFunction('');
+$collection = $chroma->getOrCreateCollection('cristiano', $embeddingFunction);
 $textLoader = new TextLoaders;
 $documents = $textLoader->dirTextLoaders('./samples', 500, 20);
 $chroma->addVectors($collection, $documents[0], $documents[1], $documents[2]);
@@ -382,11 +383,12 @@ use Rhaymison\ElephantChain\Databases\Chroma;
 use Rhaymison\ElephantChain\Prompts\RetrieverPromptsTemplate;
 use Rhaymison\ElephantChain\Chains\RetrieverChain;
 use Rhaymison\ElephantChain\Llm\OpenAiChain;
+use Rhaymison\ElephantChain\Embeddings\OpenAIEmbeddingFunction;
 
 $question = 'On May 21, against rivals Chelsea, Ronaldo scored the first goal in the 26th minute, what happened next?';
 $chroma = new Chroma('http://localhost', 6666, 'cr7', 'cr7');
-$embeddings = $chroma->openAIEmbeddingsFunction('OPEN_AI_KEY', 'text-embedding-3-small');
-$collection = $chroma->getOrCreateCollection('cristiano', $embeddings);
+$embeddingFunction = new OpenAIEmbeddingFunction('');
+$collection = $chroma->getOrCreateCollection('cristiano', $embeddingFunction);
 $retriever = $chroma->retriever($collection, [$question], 1);
 $openAi = new OpenAiChain('OPEN_AI_KEY', 'gpt-3.5-turbo');
 $chain = new RetrieverChain($openAi);
@@ -409,3 +411,88 @@ $prompt = RetrieverPromptsTemplate::simpleRetrieverPromptTemplate($question);
 $chain->dispatch($retriever->documents[0], $prompt);
 print($response);
 ```
+
+#### LARAVEL USAGE
+
+```php
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Rhaymison\ElephantChain\Databases\Chroma;
+use Rhaymison\ElephantChain\DocumentLoaders\TextLoaders;
+use Rhaymison\ElephantChain\Embeddings\OpenAIEmbeddingFunction;
+
+class GenerateVectorStoreSeed extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        $chroma = new Chroma('http://localhost', 6666, 'cr7', 'cr7');
+        $embeddingFunction = new OpenAIEmbeddingFunction('');
+        $collection = $chroma->getOrCreateCollection('laravelVectors', $embeddingFunction);
+        $textLoader = new TextLoaders;
+        $directoryPath = public_path('documents/extintores');
+        $documents = $textLoader->dirTextLoaders($directoryPath, 500, 20);
+        $chroma->addVectors($collection, $documents[0], $documents[1], $documents[2]);
+    }
+
+}
+
+```
+
+Now we can interact with your VectorsDatabase
+
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Rhaymison\ElephantChain\Chains\RetrieverChain;
+use Rhaymison\ElephantChain\Databases\Chroma;
+use Rhaymison\ElephantChain\Embeddings\OpenAIEmbeddingFunction;
+use Rhaymison\ElephantChain\Llm\OpenAiChain;
+use Rhaymison\ElephantChain\Prompts\RetrieverPromptsTemplate;
+use Symfony\Component\HttpFoundation\Response;
+
+class SimpleChatController extends Controller
+{
+    private $model;
+    private $collection;
+    private $chroma;
+
+    public function __construct()
+    {
+        $this->model = new OpenAiChain('', 'gpt-3.5-turbo');
+        $this->chroma = new Chroma('http://localhost', 6666, 'cr7', 'cr7');
+        $embeddingFunction = new OpenAIEmbeddingFunction('');
+        $this->collection = $this->chroma->getOrCreateCollection('laravelVectors', $embeddingFunction);
+    }
+
+    public function chat(Request $request)
+    {
+        $payload = $request->all();
+        $question = $payload['question'];
+        $retriever = $this->chroma->retriever($this->collection, [$question], 3);
+        $chain = new RetrieverChain($this->model);
+        $systemMessage = "You are a fire department document expert chatboot. You will receive a context. Make a summary and respond as requested by the user.";
+        $prompt = RetrieverPromptsTemplate::simpleRetrieverPromptTemplate($question, $systemMessage);
+        $llm = $chain->dispatch($retriever->documents[0], $prompt);
+        return response()->json(['msg' => $llm], Response::HTTP_OK);
+    }
+
+}
+
+```
+
+Now we have this beautiful result
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rhaymisonbetini/huggphotos/main/Screenshot%20from%202024-07-01%2017-01-56.png
+" width="500" height="400" alt="Banner" />
+</p>
+
