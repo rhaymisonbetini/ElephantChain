@@ -492,7 +492,6 @@ class SimpleChatController extends Controller
 Now we have this beautiful result
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rhaymisonbetini/huggphotos/main/Screenshot%20from%202024-07-01%2017-01-56.png
-" width="500" height="400" alt="Banner" />
+  <img src="https://raw.githubusercontent.com/rhaymisonbetini/huggphotos/main/rag.jpeg" width="500" height="400" alt="Banner" />
 </p>
 
