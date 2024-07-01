@@ -54,4 +54,17 @@ final class StringHelpers
         $sanitizedFunction = str_replace('```php', '', $sanitizedFunction);
         return str_replace('```', '', $sanitizedFunction);
     }
+
+    public static function transformForSimplePrompt(string $question, array $arguments): string
+    {
+        preg_match_all('/\{\s*(.*?)\s*\}/', $question, $matches);
+
+        foreach ($matches[1] as $placeholder) {
+            if (array_key_exists($placeholder, $arguments)) {
+                $question = str_replace('{' . $placeholder . '}', $arguments[$placeholder], $question);
+            }
+        }
+
+        return $question;
+    }
 }
