@@ -78,6 +78,7 @@ these models:
 ```PHP
 use Rhaymison\ElephantChain\Llm\GeminiChain;
 use Rhaymison\ElephantChain\Llm\OpenAiChain;
+use Rhaymison\ElephantChain\Llm\MixtralChain;
 
 // OpenAI Model
 $openAi = new OpenAiChain('OPEN_AI_KEY', 'MODEL');
@@ -85,6 +86,8 @@ $openAi = new OpenAiChain('OPEN_AI_KEY', 'MODEL');
 // Gemini Model
 $gemini = new GeminiChain('GEMINI_KEY');
 
+// Mistral Model
+$mixtral= new MixtralChain('MIXTRAL_KEY','MODEL');
 ```
 
 ## Loaders

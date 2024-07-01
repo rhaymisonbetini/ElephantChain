@@ -7,8 +7,9 @@ use GeminiAPI\Enums\ModelName;
 use GeminiAPI\GenerationConfig;
 use GeminiAPI\Resources\Parts\TextPart;
 use Psr\Http\Client\ClientExceptionInterface;
+use Rhaymison\ElephantChain\Interfaces\ModelChainInterface;
 
-class GeminiChain
+class GeminiChain implements  ModelChainInterface
 {
     /**
      * @var Client
@@ -46,15 +47,4 @@ class GeminiChain
         return $result->text();
     }
 
-    /**
-     * @throws ClientExceptionInterface
-     */
-    public function generateEmbeddings(string $text): array
-    {
-        $response = $this->client->embeddingModel(ModelName::Embedding)
-            ->embedContent(
-                new TextPart($text),
-            );
-        return $response->embedding->values;
-    }
 }
