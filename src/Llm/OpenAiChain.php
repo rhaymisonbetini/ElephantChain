@@ -25,7 +25,7 @@ class OpenAiChain implements ModelChainInterface
      * @param string $modelName
      * @param float $temperature
      */
-    public function __construct(string $apiKey, string $modelName, float $temperature = 0.5)
+    public function __construct(string $apiKey, string $modelName = 'gpt-3.5-turbo', float $temperature = 0.5)
     {
         $this->client = OpenAI::client($apiKey);
         $this->modelName = $modelName;

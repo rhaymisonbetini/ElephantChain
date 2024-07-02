@@ -4,7 +4,7 @@ namespace Rhaymison\ElephantChain\Databases;
 
 use Codewithkyrian\ChromaDB\ChromaDB;
 use Codewithkyrian\ChromaDB\Client;
-use Codewithkyrian\ChromaDB\Embeddings\OpenAIEmbeddingFunction;
+use Rhaymison\ElephantChain\Embeddings\OpenAIEmbeddingFunction;
 use Codewithkyrian\ChromaDB\Generated\Responses\QueryItemsResponse;
 use Codewithkyrian\ChromaDB\Resources\CollectionResource;
 use Rhaymison\ElephantChain\Embeddings\EmbeddingFunction;
