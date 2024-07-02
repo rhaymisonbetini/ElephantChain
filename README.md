@@ -23,6 +23,11 @@ and efficiently.
 1. [Installation](#installation)
 2. [Basic Usage](#basic-usage)
 3. [Available Models](#available-models)
+    - [OpenAi](#openai)
+    - [Gemini](#gemini)
+    - [Mistral](#mistral)
+    - [Ollama](#ollama)
+    - [Maritaca](#maritaca)
 4. [Loaders](#loaders)
     - [TXT Files](#txt-files)
     - [PDF Loaders](#pdf-loaders)
@@ -33,7 +38,12 @@ and efficiently.
     - [SequentialChain](#sequentialchain)
     - [TabularChain](#tabularchain)
     - [ChatMemoryChain](#chatmemorychain)
-6. [Vector Databases](#vector-databases)
+6. [Embedding](#embedding)
+    - [OpenAi Embeddings](#openai-embeddings)
+    - [Gemini Embeddings](#gemini-embeddings)
+    - [Mistral Embeddings](#mistral-embeddings)
+    - [Ollama Embeddings](#ollama-embeddings)
+7. [Vector Databases](#vector-databases)
     - [ElephantVectors](#elephantvectors)
     - [ChromaDB](#chromadb)
 
@@ -75,19 +85,48 @@ Elephant Chain currently supports the use of models from OpenAI and Gemini.
 Integration with Mixtral and LlamaCPP is currently being implemented. Here are examples of how to initialize and use
 these models:
 
-```PHP
-use Rhaymison\ElephantChain\Llm\GeminiChain;
-use Rhaymison\ElephantChain\Llm\OpenAiChain;
-use Rhaymison\ElephantChain\Llm\MixtralChain;
+### OpenAi
 
+You must pass your integration key with your api. The model used by default is the gpt3.5 turbo
+and with a temperature of 0.5
+
+```PHP
+use Rhaymison\ElephantChain\Llm\OpenAiChain;
 // OpenAI Model
 $openAi = new OpenAiChain('OPEN_AI_KEY', 'MODEL');
+```
 
+### Gemini
+
+You must provide your Gemini API key and pass the temperature if you want, by default it is set to 0.5
+
+```PHP
+use Rhaymison\ElephantChain\Llm\GeminiChain;
 // Gemini Model
 $gemini = new GeminiChain('GEMINI_KEY');
+```
 
+### Mistral
+
+You must pass your integration key with the mistral and choose one of the available models.
+By default the model is: mistral-large-latest and with temperature: 0.5
+
+```PHP
+use Rhaymison\ElephantChain\Llm\MixtralChain;
 // Mistral Model
 $mixtral= new MixtralChain('MIXTRAL_KEY','MODEL');
+```
+
+### Ollama
+
+```PHP
+//development
+```
+
+### Maritica
+
+```PHP
+//development
 ```
 
 ## Loaders
@@ -249,8 +288,8 @@ print($response);
 
 ### ChatMemoryChain
 
-If you want to add memory to your conversation. You can use the Memory chat with the memory 
-template. A memory cell will be stored and you can manipulate, remove or clear it whenever you 
+If you want to add memory to your conversation. You can use the Memory chat with the memory
+template. A memory cell will be stored and you can manipulate, remove or clear it whenever you
 want. ChainMemory accepts the template and name of the chat room you want to create.
 
 ```php
@@ -265,8 +304,10 @@ $chain->dispatchChainMemory($chatPrompt);
 $memory = $chain->getConversation();
 print_r($memory);
 ```
-The memory is added automatically and you don't need to worry about it. If you want to start the conversation with a memory, 
-just pass it as the third parameter to the chatTemplate... 
+
+The memory is added automatically and you don't need to worry about it. If you want to start the conversation with a
+memory,
+just pass it as the third parameter to the chatTemplate...
 The ChatMemoryChain already has a native getMemory function that you can use.
 
 #### LARAVEL USAGE
@@ -303,11 +344,49 @@ class SimpleChatController extends Controller
 }
 
 ```
+
 Now we have this beautiful result
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/rhaymisonbetini/huggphotos/main/chatchain.png" width="500" height="400" alt="Banner" />
 </p>
+
+## Embedding
+
+Using embeddings in ElephantChain is very simple. The Embedding Function interface means that all embedding models offer
+the same return,
+making their implementation easy and quick.
+
+### OpenAi Embeddings
+
+```PHP
+use Rhaymison\ElephantChain\Embeddings\OpenAIEmbeddingFunction;
+$chain = new OpenAIEmbeddingFunction('OPENAI_KEY');
+print_r($embeddingFunction->generate(['Cristiano Ronaldo was a galactic player']));
+```
+
+### Gemini Embeddings
+
+```PHP
+use Rhaymison\ElephantChain\Embeddings\GeminiEmbeddingsFunction;
+$chain = new GeminiEmbeddingsFunction('GEMINI_KEY');
+print_r($embeddingFunction->generate(['Cristiano Ronaldo was a galactic player']));
+```
+
+### Mistral Embeddings
+
+```PHP
+use Rhaymison\ElephantChain\Embeddings\MixtralEmbeddingFunction;
+// Mistral Model
+$embeddingFunction = new MixtralEmbeddingFunction('MISTRAL_KEY');
+print_r($embeddingFunction->generate(['Cristiano Ronaldo was a galactic player']));
+```
+
+### Ollama Embeddings
+
+```PHP
+//development
+```
 
 ## Vector Databases
 
