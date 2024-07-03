@@ -22,7 +22,9 @@
     "gemini-api-php/client": "dev-main",
     "ext-mbstring": "*",
     "partitech/php-mistral": "dev-main",
-    "modelflow-ai/ollama": "0.2.x-dev"
+    "modelflow-ai/ollama": "0.2.x-dev",
+    "phpoffice/phpword": "dev-master",
+    "ncjoes/office-converter": "dev-master"
   },
   "config": {
     "allow-plugins": {

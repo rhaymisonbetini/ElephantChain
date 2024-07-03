@@ -32,6 +32,7 @@ and efficiently.
     - [TXT Files](#txt-files)
     - [PDF Loaders](#pdf-loaders)
     - [CSV Loaders](#csv-loaders)
+    - [Doc Loaders](#doc-loaders)
 5. [Chains](#chains)
     - [Chain](#chain)
     - [RetrieverChain](#retrieverchain)
@@ -118,7 +119,9 @@ $mixtral= new MixtralChain('MIXTRAL_KEY','MODEL');
 ```
 
 ### Ollama
+
 Add the ollama endpoint and select the model you want to use and have downloaded in your ollama environment
+
 ```PHP
 $llm = new OllamaChain('http://127.0.0.1:11434', 'llama3');
 ```
@@ -174,6 +177,22 @@ $documents = $pdfLoader->singlePdfLoader('./samples/inicial.pdf', 500, 20);
 use Rhaymison\ElephantChain\DocumentLoaders\TabularLoaders;
 $tabular = new TabularLoaders();
 $dataTabular = $tabular->csvLoader('./samples/samples.csv', ',', 1000);
+```
+
+### Doc Loaders
+This class allows you to load only .doc files and not docx files. 
+You can load an entire directory or just a single file.
+
+```PHP
+use Rhaymison\ElephantChain\DocumentLoaders\DocLoaders;
+$pdfLoader = new DocLoaders;
+$documents = $pdfLoader->dirDocLoaders('./samples', 500, 20);
+```
+
+```PHP
+use Rhaymison\ElephantChain\DocumentLoaders\DocLoaders;
+$pdfLoader = new DocLoaders;
+$documents = $pdfLoader->singleDocFileLoader('./samples/financial.doc', 500, 20);
 ```
 
 ## Chains
