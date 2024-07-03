@@ -21,7 +21,8 @@
     "spatie/pdf-to-text": "dev-main",
     "gemini-api-php/client": "dev-main",
     "ext-mbstring": "*",
-    "partitech/php-mistral": "dev-main"
+    "partitech/php-mistral": "dev-main",
+    "modelflow-ai/ollama": "0.2.x-dev"
   },
   "config": {
     "allow-plugins": {

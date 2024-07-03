@@ -118,9 +118,9 @@ $mixtral= new MixtralChain('MIXTRAL_KEY','MODEL');
 ```
 
 ### Ollama
-
+Add the ollama endpoint and select the model you want to use and have downloaded in your ollama environment
 ```PHP
-//development
+$llm = new OllamaChain('http://127.0.0.1:11434', 'llama3');
 ```
 
 ### Maritica
@@ -385,7 +385,8 @@ print_r($embeddingFunction->generate(['Cristiano Ronaldo was a galactic player']
 ### Ollama Embeddings
 
 ```PHP
-//development
+$embeddingFunction = new OllamaEmbeddingFunction('http://127.0.0.1:11434', 'llama3');
+print_r($embeddingFunction->generate(['Cristiano Ronaldo was a galactic player']));
 ```
 
 ## Vector Databases
