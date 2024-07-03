@@ -5,6 +5,7 @@ namespace Rhaymison\ElephantChain\Llm;
 use OpenAI;
 use Rhaymison\ElephantChain\Interfaces\ModelChainInterface;
 
+
 class OpenAiChain implements ModelChainInterface
 {
 

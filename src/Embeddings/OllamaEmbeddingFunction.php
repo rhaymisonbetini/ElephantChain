@@ -13,7 +13,7 @@ class OllamaEmbeddingFunction implements EmbeddingFunction
 
     public function __construct(
         public readonly string $baseUrl = 'http://localhost:11434',
-        public readonly string $model = 'all-minilm',
+        public readonly string $model = '',
     )
     {
         $this->client = new Client([

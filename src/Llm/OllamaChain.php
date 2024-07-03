@@ -1,44 +1,36 @@
 <?php
 
 namespace Rhaymison\ElephantChain\Llm;
-
-use GuzzleHttp\Client;
+use ModelflowAi\Ollama\ClientInterface;
+use ModelflowAi\Ollama\Ollama;
 
 class OllamaChain
 {
-    private string $url;
     private string $model;
-    private int $temperature;
-    private Client $client;
+    private ClientInterface $client;
 
+    private float $temperature;
 
-    public function __construct(string $url, string $model, float $temperature = 0.5)
+    public function __construct(string $model, float $temperature = 0.5)
     {
-        $this->url = $url;
         $this->model = $model;
-
-        $this->client = new Client([
-            'base_uri' => $this->url,
-            'headers' => [
-                'Content-Type' => 'application/json',
-            ]
-        ]);
+        $this->temperature = $temperature;
+        $this->client = Ollama::client();
     }
 
-    public function inference(array $prompt)
+    public function inference(array $prompt): string
     {
-        $response = $this->client->post('api/embeddings', [
-            'json' => [
-                'model' => $this->model,
-                'options' => [
-                    'temperature' => $this->temperature
-                ],
-                'messages' => [
-                    ['role' => 'system', 'content' => $prompt['system']],
-                    ['role' => 'user', 'content' => $prompt['user']],
-                ]
-            ]
+        $chat = $this->client->chat();
+        $response = $chat->create([
+            'model' => $this->model,
+            'options' => [
+                'temperature' => $this->temperature,
+            ],
+            'messages' => [
+                ['role' => 'system', 'content' => $prompt['system']],
+                ['role' => 'user', 'content' => $prompt['user']],
+            ],
         ]);
+        return $response->message->content ?? '';
     }
-
 }
