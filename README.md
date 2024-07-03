@@ -27,7 +27,6 @@ and efficiently.
     - [Gemini](#gemini)
     - [Mistral](#mistral)
     - [Ollama](#ollama)
-    - [Maritaca](#maritaca)
 4. [Loaders](#loaders)
     - [TXT Files](#txt-files)
     - [PDF Loaders](#pdf-loaders)
@@ -123,13 +122,8 @@ $mixtral= new MixtralChain('MIXTRAL_KEY','MODEL');
 Add the ollama endpoint and select the model you want to use and have downloaded in your ollama environment
 
 ```PHP
+// Ollama Model
 $llm = new OllamaChain('http://127.0.0.1:11434', 'llama3');
-```
-
-### Maritica
-
-```PHP
-//development
 ```
 
 ## Loaders
