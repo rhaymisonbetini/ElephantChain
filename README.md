@@ -47,7 +47,8 @@ and efficiently.
     - [ElephantVectors](#elephantvectors)
     - [ChromaDB](#chromadb)
 8. [Tools](#tools)
-    - [Wikipedia](#wikipedia)
+   - [Wikipedia](#wikipedia)
+   - [DuckDuckGo](#duckduckgo)
 
 ## Installation
 
@@ -605,7 +606,7 @@ use Rhaymison\ElephantChain\Tools\Wikipedia;
 $wikipediaTool = new Wikipedia(5);
 $openAi = new OpenAiChain('OPEN_AI_KEY', 'gpt-3.5-turbo');
 $chain = new Chain($openAi, $wikipediaTool);
-$qustion = "Create a text about closures in php";
+qustion = "Create a text about closures in php";
 $prompt = PromptTemplate::createPromptTemplate($qustion, []);
 $response = $chain->run($prompt);
 ```
