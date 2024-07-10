@@ -39,6 +39,7 @@ class OpenAIEmbeddingFunction implements EmbeddingFunction
      */
     public function generate(array $texts): array
     {
+        print_r($texts);
         try {
             $response = $this->client->post('embeddings', [
                 'json' => [

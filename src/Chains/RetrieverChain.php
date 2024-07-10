@@ -35,7 +35,7 @@ class RetrieverChain extends Chain
                 $summary .= "\n\n" . $this->defineGate($promptBase);
             }
         } else {
-            return $retriever[0] ?? '';
+            $summary = $retriever[0] ?? '';
         }
         $prompt['user'] = RetrieverPromptsTemplate::transformPrompt($prompt['user'], $summary);
         return $this->defineGate($prompt);
