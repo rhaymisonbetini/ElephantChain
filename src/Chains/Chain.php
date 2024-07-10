@@ -3,11 +3,8 @@
 namespace Rhaymison\ElephantChain\Chains;
 
 use InvalidArgumentException;
-use Psr\Http\Client\ClientExceptionInterface;
 use Rhaymison\ElephantChain\Interfaces\ModelChainInterface;
-use Rhaymison\ElephantChain\Llm\GeminiChain;
-use Rhaymison\ElephantChain\Llm\MixtralChain;
-use Rhaymison\ElephantChain\Llm\OpenAiChain;
+use Rhaymison\ElephantChain\Interfaces\ToolInterface;
 
 class Chain
 {
@@ -17,12 +14,16 @@ class Chain
      */
     protected ModelChainInterface $model;
 
+    protected ?ToolInterface $tool;
+
     /**
      * @param ModelChainInterface $model
+     * @param ToolInterface|null $tool
      */
-    public function __construct(ModelChainInterface $model)
+    public function __construct(ModelChainInterface $model, ToolInterface $tool = null)
     {
         $this->model = $model;
+        $this->tool = $tool;
     }
 
     /**
@@ -31,7 +32,16 @@ class Chain
      */
     public function run(array $prompt): string
     {
+        if ($this->tool !== null) {
+            $toolResponse = $this->executeTool($prompt);
+            $prompt['user'] = $prompt['user'] . PHP_EOL . '### Adicional info : ' . $toolResponse;
+        }
         return $this->defineGate($prompt);
+    }
+
+    public function executeTool(array $prompt): string
+    {
+        return $this->tool->run($this->model, $prompt['user']);
     }
 
     /**

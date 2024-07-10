@@ -24,7 +24,10 @@
     "partitech/php-mistral": "dev-main",
     "modelflow-ai/ollama": "0.2.x-dev",
     "phpoffice/phpword": "dev-master",
-    "ncjoes/office-converter": "dev-master"
+    "ncjoes/office-converter": "dev-master",
+    "ext-curl": "*",
+    "symfony/dom-crawler": "^6.0",
+    "symfony/css-selector": "^6.0"
   },
   "config": {
     "allow-plugins": {

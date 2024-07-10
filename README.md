@@ -46,6 +46,8 @@ and efficiently.
 7. [Vector Databases](#vector-databases)
     - [ElephantVectors](#elephantvectors)
     - [ChromaDB](#chromadb)
+8. [Tools](#tools)
+    - [Wikipedia](#wikipedia)
 
 ## Installation
 
@@ -588,3 +590,49 @@ Now we have this beautiful result
   <img src="https://raw.githubusercontent.com/rhaymisonbetini/huggphotos/main/rag.jpeg" width="500" height="400" alt="Banner" />
 </p>
 
+
+## Tools
+Tools are powerful instruments that you can add to your inferences. Below you can check out some of the available tools
+
+### Wikipedia
+This tool searches Wikipedia and aggregates the information in the context of the user's question. The parameter passed in the constructor is the limit of search results.
+```php
+use Rhaymison\ElephantChain\Llm\OpenAiChain;
+use Rhaymison\ElephantChain\Chains\Chain;
+use Rhaymison\ElephantChain\Prompts\PromptTemplate;
+use Rhaymison\ElephantChain\Tools\Wikipedia;
+
+$wikipediaTool = new Wikipedia(5);
+$openAi = new OpenAiChain('OPEN_AI_KEY', 'gpt-3.5-turbo');
+$chain = new Chain($openAi, $wikipediaTool);
+$qustion = "Create a text about closures in php";
+$prompt = PromptTemplate::createPromptTemplate($qustion, []);
+$response = $chain->run($prompt);
+```
+
+### DuckDuckGo
+This powerful tool performs advanced searches on DuckDuck and adds important information to your prompt. You just need to specify the region where you want to perform the search.
+```php
+use Rhaymison\ElephantChain\Llm\OpenAiChain;
+use Rhaymison\ElephantChain\Chains\Chain;
+use Rhaymison\ElephantChain\Prompts\PromptTemplate;
+use Rhaymison\ElephantChain\Tools\DuckDuckGo;
+
+$dk = new DuckDuckGo('pt');
+$openAi = new OpenAiChain('OPEN_AI_KEY', 'gpt-3.5-turbo');
+$chain = new Chain($openAi, $dk);
+$qustion = "Create a text about closures in php";
+$prompt = PromptTemplate::createPromptTemplate($qustion, []);
+$response = $chain->run($prompt);
+```
+
+prompt example with duckduckGo
+```php
+(
+[system] => Your task is to answer the users question based on the provided context.
+[user] => Create a text about closures in PHP
+Additional info: Anonymous functions and closures in PHP allow you to create functions without a specific name, introduced in PHP 5.3. Although less common, they are useful in specific cases, often underestimated. Learn more about their advantages and peculiarities.
+Closures are anonymous functions that can access variables outside their scope. In PHP, they are useful for encapsulating logic and creating callbacks.
+Closures in PHP are useful for encapsulating and storing functions inside other functions. They allow access to external variables, facilitating data manipulation.
+)
+```

@@ -25,4 +25,6 @@ enum PromptsEnum: string
         ]
         Please write the necessary PHP function to filter this data based on a specific criterion (for example, return only rows where \"Year\" is \"2016\"). The function should be named `filterData` and should accept an array of data as an argument. Return only the function as a string.
         ";
+
+    case WIKIPEDIA_PROMPT_THEME = "You are an expert in identifying research topics. Given the user's question, respond with a 3  keywords expressly linked to the topic. Answer only this list of words in the language of the question. Do not provide any explanation or additional text.";
 }
