@@ -14,8 +14,8 @@ class TabularChain extends Chain
     /**
      * @param array $datas
      * @param string $question
-     * @return array
-     * @throws ClientExceptionInterface
+     * @return string
+     * @throws ClientExceptionInterface|Exception
      */
     public function dispatchTabularChain(array $datas, string $question): string
     {
@@ -37,7 +37,6 @@ class TabularChain extends Chain
      * @param array $fragment
      * @param string $question
      * @return string
-     * @throws ClientExceptionInterface
      */
     public function createFilterFunction(array $fragment, string $question): string
     {
