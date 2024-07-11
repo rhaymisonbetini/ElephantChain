@@ -56,7 +56,7 @@ To get started with Elephant Chain, follow these simple steps:
 
 1. **Installation:** Install the library using Composer:
    ```bash
-   composer require
+   composer require rhaymison/elephant_chain
    ```
 
 ## Basic Usage
@@ -594,6 +594,7 @@ Now we have this beautiful result
 
 ## Tools
 Tools are powerful instruments that you can add to your inferences. Below you can check out some of the available tools
+ps: Till this moment the tools are only available for simple Chain
 
 ### Wikipedia
 This tool searches Wikipedia and aggregates the information in the context of the user's question. The parameter passed in the constructor is the limit of search results.
