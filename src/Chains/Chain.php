@@ -34,7 +34,7 @@ class Chain
     {
         if ($this->tool !== null) {
             $toolResponse = $this->executeTool($prompt);
-            $prompt['user'] = $prompt['user'] . PHP_EOL . '### Adicional info : ' . $toolResponse;
+            $prompt['user'] = $prompt['user'] . PHP_EOL . '### additional info : ' . $toolResponse;
         }
         return $this->defineGate($prompt);
     }

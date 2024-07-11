@@ -24,7 +24,6 @@ class TabularChain extends Chain
         eval($sanitizedFunction);
         if (function_exists('filterData')) {
             $data = filterData($datas);
-            print_r(json_encode($data));
             $question .= "\n\n" . "Datos para serem analisados na resposta: " . "\n\n" . json_encode($data);
             $prompt = PromptTemplate::createPromptTemplate($question, []);
             return $this->model->inference($prompt);
