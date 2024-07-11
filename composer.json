@@ -1,7 +1,8 @@
 {
   "name": "rhaymison/elephant_chain",
-  "description": "llm chain for pho projects",
+  "description": "LLM chain for PHP projects",
   "type": "library",
+  "version": "0.0.1",
   "autoload": {
     "psr-4": {
       "Rhaymison\\ElephantChain\\": "src/"
@@ -9,7 +10,7 @@
   },
   "authors": [
     {
-      "name": "rhaymisonbetini",
+      "name": "Rhaymison Betini",
       "email": "rhaymison@hotmail.com"
     }
   ],
