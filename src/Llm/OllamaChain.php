@@ -3,8 +3,9 @@
 namespace Rhaymison\ElephantChain\Llm;
 use ModelflowAi\Ollama\ClientInterface;
 use ModelflowAi\Ollama\Ollama;
+use Rhaymison\ElephantChain\Interfaces\ModelChainInterface;
 
-class OllamaChain  implements ModelChainInterface
+class OllamaChain implements ModelChainInterface
 {
     private string $model;
     private ClientInterface $client;
